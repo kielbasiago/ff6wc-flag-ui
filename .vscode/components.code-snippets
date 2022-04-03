@@ -1,0 +1,20 @@
+{
+    "New Pure Component": {
+        "scope": "typescript,typescriptreact",
+        "prefix": "newcomponent",
+        "body": [
+            "import React from 'react';",
+            "import styled from 'styled-components';",
+            "",
+            "type Props = Record<string, unknown>;",
+            "",
+            "export const ${TM_FILENAME_BASE/(.*)$/${1:/capitalize}/} = ({}: Props) => {",
+            "    return <></>;",
+            "}",
+            "",
+            "export default ${TM_FILENAME_BASE/(.*)$/${1:/capitalize}/};",
+            ""
+        ],
+        "description": "Export both a component function with typed props matching the filename"
+    }
+}

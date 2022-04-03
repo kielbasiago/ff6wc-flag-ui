@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { css, ThemeProvider, createGlobalStyle } from "styled-components";
+import { Routes, Route } from "react-router-dom";
+import "antd/dist/antd.css";
+import { theme } from "./theme/theme";
+
+const FlagView = React.lazy(() => import("./FlagView/FlagView"));
+
+const GlobalStyles = createGlobalStyle`
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            <Routes>
+                <Route path="/" element={<FlagView />} />
+            </Routes>
+        </ThemeProvider>
+    );
 }
-
 export default App;
