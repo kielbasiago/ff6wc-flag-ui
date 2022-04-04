@@ -5,8 +5,9 @@ import Button from "antd/es/button";
 import TabsBase from "antd/es/tabs";
 import DatePicker from "antd/es/date-picker";
 import version from "antd/es/version";
-import { WCTabs } from "../constants";
+import { tabs, WCGameMode, WCTabs } from "../constants";
 import FlagField from "./FlagField";
+import * as yup from "yup";
 
 const { TabPane } = TabsBase;
 
@@ -16,40 +17,42 @@ const Tabs = styled(TabsBase)`
     padding: ${(props) => props.theme.spacing(3)};
 `;
 
-const MySelect = ({ label, ...props }: any) => {
-    const [field, meta] = useField(props);
-    return (
-        <div>
-            <label htmlFor={props.id || props.name}>{label}</label>
-            <select {...field} {...props} />
-            {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
-        </div>
-    );
-};
+// const MySelect = ({ label, ...props }: any) => {
+//     const [field, meta] = useField(props);
+//     return (
+//         <div>
+//             <label htmlFor={props.id || props.name}>{label}</label>
+//             <select {...field} {...props} />
+//             {meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
+//         </div>
+//     );
+// };
 
 export const FlagView = ({}: Props) => {
     const value = {
-        mode: "character_gating",
+        mode: WCGameMode.CHARACTER_GATED,
     };
-    const tabs = Object.values(WCTabs);
+    const tabValues = Object.values(WCTabs);
     const T = (
         <Tabs defaultActiveKey="0">
-            {tabs.map((tab, idx) => (
+            {tabValues.map((tab, idx) => (
                 <TabPane key={tab} tab={tab}>
-                    <Formik
-                        initialValues={value}
-                        onSubmit={(values) => {
-                            console.log(values);
-                            debugger;
-                        }}
-                    >
-                        <FlagField name="mode" />
-                    </Formik>
+                    {tabs[tab]}
                 </TabPane>
             ))}
         </Tabs>
     );
-    return <div>{T}</div>;
+    return (
+        <Formik
+            initialValues={value}
+            onSubmit={(values) => {
+                console.log(values);
+                debugger;
+            }}
+        >
+            {T}
+        </Formik>
+    );
 };
 
 export default FlagView;
